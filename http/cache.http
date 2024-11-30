@@ -26,3 +26,9 @@ Content-Type: application/json
 
 ### 물건 삭제
 DELETE localhost:8080/items/1
+
+### 페이징 조회
+GET localhost:8080/items/search?q=mo
+
+### 페이징 조회
+GET localhost:8080/items/search?q=mo&page=1&size=5

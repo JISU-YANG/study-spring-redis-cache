@@ -54,4 +54,14 @@ public class ItemController {
     ) {
         itemService.delete(id);
     }
+
+    @GetMapping("/search")
+    public Page<ItemDto> search(
+            @RequestParam(name = "q")
+            String query,
+            // Query Parameter 에 page와 size를 입력하면 자동으로 매핑이 된다.
+            Pageable pageable
+    ){
+        return itemService.searchByName(query, pageable);
+    }
 }
