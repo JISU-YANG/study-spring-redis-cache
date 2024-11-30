@@ -4,6 +4,7 @@ import com.example.redis.domain.Item;
 import com.example.redis.domain.ItemDto;
 import com.example.redis.repo.ItemRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ public class ItemService {
         this.itemRepository = itemRepository;
     }
 
+    @CachePut(cacheNames = "itemCache", key = "#result.id")
     public ItemDto create(ItemDto dto) {
         return ItemDto.fromEntity(itemRepository.save(Item.builder()
                 .name(dto.getName())
