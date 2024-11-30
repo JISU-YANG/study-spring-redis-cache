@@ -4,9 +4,11 @@ import com.example.redis.domain.Item;
 import com.example.redis.domain.ItemDto;
 import com.example.redis.repo.ItemRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.annotations.Cache;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -63,6 +65,10 @@ public class ItemService {
         return ItemDto.fromEntity(itemRepository.save(item));
     }
 
+    @Caching(evict = {
+            @CacheEvict(cacheNames = "itemAllCache", allEntries = true),
+            @CacheEvict(cacheNames = "itemCache", key = "#root.args")
+    })
     public void delete(Long id) {
         itemRepository.deleteById(id);
     }
