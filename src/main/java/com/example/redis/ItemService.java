@@ -4,6 +4,7 @@ import com.example.redis.domain.Item;
 import com.example.redis.domain.ItemDto;
 import com.example.redis.repo.ItemRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -27,14 +28,21 @@ public class ItemService {
                 .build()));
     }
 
+    @Cacheable(cacheNames = "itemAllCache", key = "getMethodName()")
     public List<ItemDto> readAll() {
+        log.info("readAll: {}", itemRepository.findAll());
         return itemRepository.findAll()
                 .stream()
                 .map(ItemDto::fromEntity)
                 .toList();
     }
 
+    // @Cacheable: 이 메서드의 return을 캐싱하겠다.
+    // cacheNames: return 되어 만들어질 캐시의 이름
+    // key: 캐시 데이터를 구분하기 위해 활용하는 값
+    @Cacheable(cacheNames = "itemCache", key = "args[0]")
     public ItemDto readOne(Long id) {
+        log.info("readOne: {}", id);
         return itemRepository.findById(id)
                 .map(ItemDto::fromEntity)
                 .orElseThrow(() ->

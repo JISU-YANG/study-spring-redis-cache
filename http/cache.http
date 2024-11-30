@@ -1,0 +1,5 @@
+### 단건 조회
+GET localhost:8080/items/1
+
+### 전체 조회
+GET localhost:8080/items
