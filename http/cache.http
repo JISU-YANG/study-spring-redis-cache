@@ -1,5 +1,5 @@
 ### 단건 조회
-GET localhost:8080/items/42
+GET localhost:8080/items/1
 
 ### 전체 조회
 GET localhost:8080/items
@@ -12,5 +12,15 @@ Content-Type: application/json
   "name": "test mouse",
   "description": "test mouse description",
   "price": 100000
+}
+
+### 물건수정
+PUT localhost:8080/items/1
+Content-Type: application/json
+
+{
+  "name": "event mouse",
+  "description": "sale!",
+  "price": 10000
 }
 

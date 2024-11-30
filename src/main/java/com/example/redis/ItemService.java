@@ -4,6 +4,7 @@ import com.example.redis.domain.Item;
 import com.example.redis.domain.ItemDto;
 import com.example.redis.repo.ItemRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
@@ -51,6 +52,8 @@ public class ItemService {
                         new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
+    @CachePut(cacheNames = "itemCache", key = "args[0]")
+    @CacheEvict(cacheNames = "itemAllCache", allEntries = true)
     public ItemDto update(Long id, ItemDto dto) {
         Item item = itemRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));

@@ -26,7 +26,7 @@ public class CacheConfig {
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration
                 .defaultCacheConfig()
                 .disableCachingNullValues() // null을 캐싱할 것 인지
-                .entryTtl(Duration.ofSeconds(10)) // Time To Live: 기본 캐시 유지 시간
+                .entryTtl(Duration.ofSeconds(120)) // Time To Live: 기본 캐시 유지 시간
                 .computePrefixWith(CacheKeyPrefix.simple()) // 캐시를 구분하는 접두사 설정
                 .serializeValuesWith( // 캐시 저장할 값을 어떻게 직렬화 / 역직렬화 할 것인지
                         RedisSerializationContext.SerializationPair.fromSerializer(RedisSerializer.java())
